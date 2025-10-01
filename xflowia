@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XFlowIA - Réceptionniste IA Premium</title>
+    <meta name="description" content="Révolutionnez votre support client avec nos réceptionnistes IA. Service premium 24h/24, 7j/7 sans interruption.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #ffffff;
+            background: #0a0a0a;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #0a0a0a, #1a1a2e, #16213e);
+            z-index: -2;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background: linear-gradient(45deg, #0a0a0a, #1a1a2e, #16213e); }
+            50% { background: linear-gradient(45deg, #16213e, #0a0a0a, #1a1a2e); }
+        }
+
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(0, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) translateX(0px); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) translateX(100px); opacity: 0; }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00ffff, #0080ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        .logo-text {
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            width: 32px;
+            height: 40px;
+            margin-right: -2px;
+        }
+
+        .logo-x {
+            font-size: 28px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00ffff, #0080ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            line-height: 1;
+        }
+
+        .logo-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 35px;
+            height: 35px;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.3), transparent);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: logoGlow 2s ease-in-out infinite alternate;
+        }
+
+        .logo-circuit {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.6;
+        }
+
+        .logo-circuit::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 10%;
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #00ffff, transparent);
+            animation: circuitFlow1 3s ease-in-out infinite;
+        }
+
+        .logo-circuit::after {
+            content: '';
+            position: absolute;
+            bottom: 20%;
+            right: 10%;
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #0080ff, transparent);
+            animation: circuitFlow2 3s ease-in-out infinite;
+            animation-delay: 1s;
+        }
+
+        .logo-text {
+            font-family: 'Inter', sans-serif;
+            letter-spacing: -1px;
+        }
+
+        @keyframes logoGlow {
+            0% {
+                opacity: 0.3;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                opacity: 0.6;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+        }
+
+        @keyframes circuitFlow1 {
+            0%, 100% {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            50% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes circuitFlow2 {
+            0%, 100% {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            50% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .logo:hover .logo-glow {
+            animation-duration: 0.5s;
+        }
+
+        .logo:hover .logo-x {
+            transform: scale(1.1);
+            transition: transform 0.3s ease;
+        }
+
+        .contact-email {
+            color: #00ffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .contact-email:hover {
+            transform: translateY(-2px);
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 0 50px;
+            position: relative;
+        }
+
+        .hero-content {
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #ffffff, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #b0b0b0;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #00ffff, #0080ff);
+            color: #000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.3);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 80px 0;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #ffffff, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Grid Layouts */
+        .grid {
+            display: grid;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        }
+
+        /* Card Styles */
+        .card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #00ffff, #0080ff);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover::before {
+            transform: translateX(0);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.1);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00ffff;
+            margin-bottom: 15px;
+        }
+
+        .card-content {
+            color: #b0b0b0;
+            line-height: 1.6;
+        }
+
+        /* Timeline Styles for Use Cases */
+        .use-cases-section {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.02), rgba(0, 128, 255, 0.02));
+        }
+
+        .timeline-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding-top: 40px;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, #00ffff, #0080ff);
+            transform: translateX(-50%);
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin: 40px 0;
+            opacity: 0;
+            animation: slideInTimeline 0.8s ease forwards;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-item:nth-child(1) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.4s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.6s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.8s; }
+        .timeline-item:nth-child(5) { animation-delay: 1s; }
+
+        .timeline-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #00ffff, #0080ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin: 0 30px;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.3);
+        }
+
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            max-width: 350px;
+            backdrop-filter: blur(10px);
+        }
+
+        .timeline-content h3 {
+            color: #00ffff;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .timeline-content p {
+            color: #b0b0b0;
+            line-height: 1.6;
+        }
+
+        @keyframes slideInTimeline {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Features Grid Styles */
+        .features-section {
+            background: radial-gradient(ellipse at center, rgba(0, 255, 255, 0.05), transparent);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 40px 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .feature-item:hover::before {
+            left: 100%;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-15px) scale(1.05);
+            border-color: rgba(0, 255, 255, 0.4);
+            box-shadow: 0 25px 50px rgba(0, 255, 255, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        .feature-phone .feature-icon { animation-delay: 0s; }
+        .feature-text .feature-icon { animation-delay: 0.5s; }
+        .feature-ai .feature-icon { animation-delay: 1s; }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .feature-item h3 {
+            color: #00ffff;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .feature-item p {
+            color: #b0b0b0;
+            line-height: 1.6;
+        }
+
+        /* Security Grid Styles */
+        .security-section {
+            background: linear-gradient(45deg, rgba(255, 215, 0, 0.02), rgba(0, 255, 255, 0.02));
+        }
+
+        .security-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+            margin-top: 50px;
+        }
+
+        .security-item {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .security-item:hover {
+            transform: translateX(10px);
+            border-color: rgba(255, 215, 0, 0.4);
+            box-shadow: -10px 10px 30px rgba(255, 215, 0, 0.1);
+        }
+
+        .security-icon {
+            font-size: 2.5rem;
+            margin-right: 25px;
+            min-width: 80px;
+            text-align: center;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .security-content h3 {
+            color: #ffd700;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .security-content p {
+            color: #b0b0b0;
+            line-height: 1.6;
+        }
+
+        /* Steps Styles */
+        .steps-section {
+            background: linear-gradient(135deg, rgba(128, 0, 255, 0.05), rgba(0, 255, 255, 0.05));
+        }
+
+        .steps-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1000px;
+            margin: 0 auto;
+            margin-top: 60px;
+            flex-wrap: wrap;
+        }
+
+        .step-item {
+            text-align: center;
+            max-width: 280px;
+            opacity: 0;
+            animation: fadeInStep 0.8s ease forwards;
+        }
+
+        .step-item:nth-child(1) { animation-delay: 0.2s; }
+        .step-item:nth-child(3) { animation-delay: 0.6s; }
+        .step-item:nth-child(5) { animation-delay: 1s; }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #8000ff, #00ffff);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin: 0 auto 20px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(128, 0, 255, 0.3);
+        }
+
+        .step-number::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid transparent;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8000ff, #00ffff) border-box;
+            mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            animation: rotate 3s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .step-content h3 {
+            color: #8000ff;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .step-content p {
+            color: #b0b0b0;
+            line-height: 1.6;
+        }
+
+        .step-connector {
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, #8000ff, #00ffff);
+            position: relative;
+            opacity: 0;
+            animation: fadeInConnector 0.8s ease forwards;
+            animation-delay: 0.4s;
+        }
+
+        .step-connector::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -5px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid #00ffff;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+        }
+
+        @keyframes fadeInStep {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInConnector {
+            from {
+                opacity: 0;
+                width: 0;
+            }
+            to {
+                opacity: 1;
+                width: 100px;
+            }
+        }
+
+        /* Testimonials Section */
+        .testimonials-section {
+            background: linear-gradient(135deg, rgba(255, 20, 147, 0.03), rgba(138, 43, 226, 0.03));
+            overflow: hidden;
+        }
+
+        .testimonials-slider {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 25px;
+            padding: 35px;
+            position: relative;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .testimonial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #ff1493, #8a2be2);
+            transform: translateX(-100%);
+            transition: transform 0.8s ease;
+        }
+
+        .testimonial-card:hover::before {
+            transform: translateX(0);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-20px) rotateX(5deg);
+            border-color: rgba(255, 20, 147, 0.4);
+            box-shadow: 0 30px 60px rgba(255, 20, 147, 0.2);
+        }
+
+        .testimonial-hm::after {
+            content: '👗';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            opacity: 0.3;
+        }
+
+        .testimonial-marriott::after {
+            content: '🏨';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            opacity: 0.3;
+        }
+
+        .testimonial-airbnb::after {
+            content: '🏠';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            opacity: 0.3;
+        }
+
+        .testimonial-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .company-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff1493, #8a2be2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .testimonial-rating {
+            font-size: 1rem;
+            opacity: 0;
+            animation: fadeInStars 1s ease forwards;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes fadeInStars {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .testimonial-content {
+            color: #e0e0e0;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+
+        .testimonial-stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            background: rgba(255, 20, 147, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 20, 147, 0.2);
+            min-width: 100px;
+            transition: all 0.3s ease;
+        }
+
+        .stat:hover {
+            transform: scale(1.05);
+            background: rgba(255, 20, 147, 0.2);
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ff1493;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #b0b0b0;
+            text-align: center;
+        }
+
+        /* Case Study Cards */
+        .case-study {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(0, 128, 255, 0.1));
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .case-study-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #00ffff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #00ffff;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #00ffff;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-submit {
+            background: linear-gradient(135deg, #00ffff, #0080ff);
+            color: #000;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.3);
+        }
+
+        /* RGPD Notice */
+        .rgpd-notice {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid #00ffff;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 0 10px 10px 0;
+            font-size: 0.9rem;
+            color: #b0b0b0;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Cookie Banner */
+        .cookie-banner {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.95);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            transform: translateY(100px);
+            transition: transform 0.5s ease;
+        }
+
+        .cookie-banner.show {
+            transform: translateY(0);
+        }
+
+        .cookie-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .cookie-text {
+            flex: 1;
+            color: #b0b0b0;
+        }
+
+        .cookie-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .cookie-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cookie-accept {
+            background: linear-gradient(135deg, #00ffff, #0080ff);
+            color: #000;
+        }
+
+        .cookie-decline {
+            background: transparent;
+            color: #00ffff;
+            border: 1px solid #00ffff;
+        }
+
+        .cookie-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Responsive adjustments for new layouts */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 80px 0 30px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section {
+                padding: 60px 0;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 40px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .contact-form {
+                padding: 30px 15px;
+            }
+            
+            /* Timeline responsive */
+            .timeline-container::before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                flex-direction: row !important;
+                padding-left: 80px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                flex-direction: row !important;
+            }
+            
+            .timeline-icon {
+                position: absolute;
+                left: 0;
+                margin: 0;
+            }
+            
+            .timeline-content {
+                max-width: none;
+            }
+            
+            /* Features responsive */
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            /* Security responsive */
+            .security-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .security-icon {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            /* Steps responsive */
+            .steps-container {
+                flex-direction: column;
+                gap: 40px;
+            }
+            
+            .step-connector {
+                transform: rotate(90deg);
+                width: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation"></div>
+    <div class="floating-particles"></div>
+
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">XFlowIA</div>
+            <a href="mailto:christopher@xflowia.com" class="contact-email">christopher@xflowia.com</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Révolutionnez votre support client avec nos réceptionnistes IA</h1>
+                <p>Transformez votre accueil client avec la puissance de l'intelligence artificielle. Notre solution offre un service premium 24h/24, 7j/7, sans interruption.</p>
+                <a href="#contact" class="cta-button">Demander une démo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why AI Receptionist -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Pourquoi un réceptionniste IA ?</h2>
+            <div class="grid grid-4">
+                <div class="card">
+                    <h3 class="card-title">Disponibilité 24/7</h3>
+                    <p class="card-content">Jamais de coupure, même en dehors des heures d'ouverture. Vos clients sont accueillis à tout moment avec le même niveau de professionnalisme.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Gestion simultanée</h3>
+                    <p class="card-content">Capable de prendre plusieurs appels simultanément sans jamais faire attendre vos clients.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Libération d'équipes</h3>
+                    <p class="card-content">Vos collaborateurs se concentrent sur les tâches à forte valeur ajoutée pendant que l'IA gère les demandes routinières avec efficacité.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Communication multilingue</h3>
+                    <p class="card-content">Support fluide dans plusieurs langues pour une clientèle internationale. Aucune barrière linguistique ne freine votre développement.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Cas d'usage concrets</h2>
+            <div class="grid use-cases">
+                <div class="card">
+                    <h3 class="card-title">Prise de rendez-vous intelligente</h3>
+                    <p class="card-content">Réservations instantanées même hors horaires, avec vérification automatique des disponibilités et confirmations personnalisées.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Réponses aux questions courantes</h3>
+                    <p class="card-content">Base de connaissances intégrée pour des réponses précises et cohérentes sur vos produits, services et procédures.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Communications personnalisées</h3>
+                    <p class="card-content">Envoi automatique de mails de bienvenue et de confirmations adaptés au profil de chaque client.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Qualification intelligente</h3>
+                    <p class="card-content">Orientation automatique vers le bon service selon la nature de la demande pour optimiser le traitement.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Gestion des urgences</h3>
+                    <p class="card-content">Escalade automatique vers un humain pour les situations critiques nécessitant une intervention immédiate.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Multi-channel Solution -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Solution évolutive et multicanale</h2>
+            <div class="grid grid-3">
+                <div class="card">
+                    <h3 class="card-title">Support téléphonique</h3>
+                    <p class="card-content">Intégration complète avec vos lignes existantes pour une transition transparente. Reconnaissance vocale avancée et synthèse naturelle.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Communications textuelles</h3>
+                    <p class="card-content">Chat en temps réel, SMS et messagerie instantanée. Interface unifiée pour tous vos canaux de communication client.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Agents IA autonomes</h3>
+                    <p class="card-content">Intelligence artificielle complètement autonome capable de gérer l'intégralité de votre service client avec apprentissage continu.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Sécurité et Conformité : Priorité Absolue</h2>
+            <div class="grid grid-3">
+                <div class="card">
+                    <h3 class="card-title">Chiffrement de bout en bout</h3>
+                    <p class="card-content">Protection maximale des données avec chiffrement des données clients. Vos informations client sont protégées selon les standards les plus élevés.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Conformité RGPD stricte</h3>
+                    <p class="card-content">Respect intégral du règlement européen sur la protection des données. Droits à l'effacement, portabilité et transparence totale sur le traitement.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Traçabilité complète</h3>
+                    <p class="card-content">Historique détaillé de toutes les interactions avec horodatage précis pour une conformité réglementaire optimale.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Getting Started -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Comment démarrer avec XFlowIA ?</h2>
+            <div class="grid grid-3">
+                <div class="card">
+                    <h3 class="card-title">Analyse de vos besoins</h3>
+                    <p class="card-content">Consultation personnalisée pour identifier vos défis spécifiques et définir la solution optimale adaptée à votre entreprise.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Installation transparente</h3>
+                    <p class="card-content">Déploiement sans interruption de votre activité. Migration progressive et formation de vos équipes pour une adoption réussie en quelques jours.</p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Support continu</h3>
+                    <p class="card-content">Accompagnement permanent et correction des bugs pour garantir une performance optimale de votre solution IA.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies -->
+    <section class="section testimonials-section">
+        <div class="container">
+            <h2 class="section-title">S'ils l'utilisent, pourquoi pas vous ?</h2>
+            <div class="testimonials-slider">
+                <div class="testimonial-card testimonial-hm">
+                    <div class="testimonial-header">
+                        <div class="company-logo">H&M</div>
+                        <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                    </div>
+                    <div class="testimonial-content">
+                        <p>Implémentation d'un chatbot IA pendant les pics d'achat. Réduction de 70% du délai de réponse aux questions fréquentes sur commandes et disponibilités, avec conseils mode personnalisés.</p>
+                    </div>
+                    <div class="testimonial-stats">
+                        <div class="stat">
+                            <span class="stat-number">70%</span>
+                            <span class="stat-label">Réduction délais</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card testimonial-marriott">
+                    <div class="testimonial-header">
+                        <div class="company-logo">Marriott</div>
+                        <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                    </div>
+                    <div class="testimonial-content">
+                        <p>Déploiement de RenAI en 2023, concierge virtuel pour les hôtels Renaissance. Communication via WhatsApp et SMS pour une expérience client premium.</p>
+                    </div>
+                    <div class="testimonial-stats">
+                        <div class="stat">
+                            <span class="stat-number">2023</span>
+                            <span class="stat-label">Déploiement</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card testimonial-airbnb">
+                    <div class="testimonial-header">
+                        <div class="company-logo">Airbnb</div>
+                        <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                    </div>
+                    <div class="testimonial-content">
+                        <p>Chatbot IA utilisé par 50% des utilisateurs pour leur support client aux États-Unis. Réduction de 15% de la charge sur les agents humains confirmée par le PDG.</p>
+                    </div>
+                    <div class="testimonial-stats">
+                        <div class="stat">
+                            <span class="stat-number">50%</span>
+                            <span class="stat-label">Utilisateurs</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">-15%</span>
+                            <span class="stat-label">Charge agents</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">Contactez-nous</h2>
+            <form class="contact-form" action="https://formspree.io/f/mrbyegjg" method="POST">
+                <div class="form-group">
+                    <label for="name">Nom complet *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="_replyto" required>
+                </div>
+                <div class="form-group">
+                    <label for="company">Entreprise</label>
+                    <input type="text" id="company" name="company">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Téléphone</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message *</label>
+                    <textarea id="message" name="message" placeholder="Décrivez vos besoins..." required></textarea>
+                </div>
+                <!-- Hidden fields for Formspree -->
+                <input type="hidden" name="_next" value="https://xflowia.com/merci">
+                <input type="hidden" name="_subject" value="Nouvelle demande de démo XFlowIA">
+                <input type="hidden" name="_cc" value="christopher@xflowia.com">
+                <div class="form-group">
+                    <input type="checkbox" id="consent" name="consent" required>
+                    <label for="consent" style="display: inline; margin-left: 10px;">
+                        J'accepte que mes données personnelles soient traitées conformément à la politique de confidentialité et au RGPD *
+                    </label>
+                </div>
+                <button type="submit" class="form-submit">Envoyer la demande</button>
+                
+                <div class="rgpd-notice">
+                    <strong>Protection des données :</strong> Conformément au RGPD, vos données sont traitées uniquement pour répondre à votre demande. Vous disposez d'un droit d'accès, de rectification, d'effacement et de portabilité de vos données. Contact : christopher@xflowia.com
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 XFlowIA. Tous droits réservés. | <a href="mailto:christopher@xflowia.com" style="color: #00ffff;">christopher@xflowia.com</a></p>
+            <p style="margin-top: 10px; color: #666; font-size: 0.9rem;">
+                Conforme RGPD • Données hébergées en UE • Chiffrement SSL/TLS
+            </p>
+        </div>
+    </footer>
+
+    <!-- Cookie Banner -->
+    <div id="cookieBanner" class="cookie-banner">
+        <div class="cookie-content">
+            <div class="cookie-text">
+                Nous utilisons des cookies pour améliorer votre expérience. En continuant, vous acceptez notre politique de cookies conforme au RGPD.
+            </div>
+            <div class="cookie-buttons">
+                <button class="cookie-btn cookie-accept" onclick="acceptCookies()">Accepter</button>
+                <button class="cookie-btn cookie-decline" onclick="declineCookies()">Refuser</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Floating particles animation
+        function createParticles() {
+            const particlesContainer = document.querySelector('.floating-particles');
+            
+            for (let i = 0; i < 80; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        createParticles();
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Cookie Banner Functions
+        function showCookieBanner() {
+            const banner = document.getElementById('cookieBanner');
+            if (!localStorage.getItem('cookiesAccepted')) {
+                setTimeout(() => {
+                    banner.classList.add('show');
+                }, 2000);
+            }
+        }
+
+        function acceptCookies() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            document.getElementById('cookieBanner').classList.remove('show');
+        }
+
+        function declineCookies() {
+            localStorage.setItem('cookiesAccepted', 'false');
+            document.getElementById('cookieBanner').classList.remove('show');
+        }
+
+        // Initialize cookie banner
+        showCookieBanner();
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(10, 10, 10, 0.95)';
+            } else {
+                header.style.background = 'rgba(10, 10, 10, 0.9)';
+            }
+        });
+
+        // Form submission enhancement
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            const submitBtn = document.querySelector('.form-submit');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.textContent = 'Envoi en cours...';
+            submitBtn.disabled = true;
+            
+            // The form will be handled by Formspree
+            // Show success message after form submission
+            setTimeout(() => {
+                submitBtn.textContent = 'Message envoyé !';
+                submitBtn.style.background = 'linear-gradient(135deg, #00ff00, #00cc00)';
+                
+                // Reset after 3 seconds
+                setTimeout(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.style.background = 'linear-gradient(135deg, #00ffff, #0080ff)';
+                    submitBtn.disabled = false;
+                    document.querySelector('.contact-form').reset();
+                }, 3000);
+            }, 1000);
+        });
+
+        // Add parallax effect to hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.hero-content');
+            const speed = scrolled * 0.5;
+            parallax.style.transform = `translateY(${speed}px)`;
+        });
+
+        // Enhanced card hover effects with 3D rotation
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+            });
+        });
+
+        // Dynamic gradient animation based on scroll
+        window.addEventListener('scroll', () => {
+            const scrollPercent = window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight);
+            const hue = Math.floor(scrollPercent * 360);
+            document.documentElement.style.setProperty('--dynamic-hue', hue);
+        });
+
+        // Typewriter effect for hero title (optional enhancement)
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Initialize animations when page loads
+        window.addEventListener('load', () => {
+            // Add stagger animation to cards
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.classList.add('card-animate');
+            });
+        });
+    </script>
+
+    <style>
+        /* Additional CSS for enhanced animations */
+        .card-animate {
+            animation: slideInUp 0.6s ease forwards;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Dynamic gradient variable */
+        :root {
+            --dynamic-hue: 180;
+        }
+
+        /* Enhanced hover effects for CTA button */
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.3));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .cta-button:hover::after {
+            opacity: 1;
+        }
+
+        /* Improved mobile responsiveness */
+        @media (max-width: 480px) {
+            .hero {
+                padding: 80px 0 30px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section {
+                padding: 60px 0;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 40px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .contact-form {
+                padding: 30px 15px;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(0, 255, 255, 0.1);
+            border-top: 3px solid #00ffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Accessibility improvements */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .card {
+                border: 2px solid #00ffff;
+            }
+            
+            .cta-button {
+                border: 2px solid #000;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .floating-particles {
+                display: none;
+            }
+        }
+    </style>
+</body>
+</html>
