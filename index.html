@@ -791,6 +791,91 @@
     .cta-box { padding: 48px 28px; }
   }
 
+  /* ─── FAQ ─── */
+  .faq-section {
+    padding: 120px 0;
+    background: var(--bg2);
+  }
+
+  .faq-list {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 800px;
+  }
+
+  .faq-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .faq-item.open {
+    border-color: rgba(124,58,237,0.35);
+  }
+
+  .faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    cursor: pointer;
+    text-align: left;
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    transition: background 0.2s;
+  }
+  .faq-question:hover { background: var(--surface-hover); }
+
+  .faq-icon {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    transition: border-color 0.3s, color 0.3s, transform 0.35s ease, background 0.3s;
+    line-height: 1;
+  }
+  .faq-item.open .faq-icon {
+    transform: rotate(45deg);
+    border-color: var(--violet);
+    color: var(--violet-light);
+    background: rgba(124,58,237,0.1);
+  }
+
+  .faq-answer {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.38s ease;
+  }
+  .faq-item.open .faq-answer {
+    grid-template-rows: 1fr;
+  }
+
+  .faq-answer-inner {
+    overflow: hidden;
+  }
+
+  .faq-answer p {
+    padding: 0 28px 24px;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
   /* ─── FOOTER ─── */
   footer {
     padding: 48px 40px 40px;
@@ -822,13 +907,9 @@
     gap: 24px;
     flex-wrap: wrap;
   }
-  .footer-links a {
-    font-size: 0.82rem;
-    color: var(--text-dim);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
+  .footer-links a { font-size: 0.82rem; color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: var(--text-muted); }
+  .footer-links a[href^="mailto"] { color: var(--red-light); }
 
   .footer-copy {
     font-size: 0.78rem;
@@ -1065,7 +1146,7 @@
           <div class="stat-note">Même à 3h du matin, même le 25 décembre</div>
         </div>
         <div class="stat-item fade-up">
-          <div class="stat-value">80%</div>
+          <div class="stat-value">100%</div>
           <div class="stat-label">Des messages traités automatiquement</div>
           <div class="stat-note">Sans aucune intervention humaine</div>
         </div>
@@ -1079,12 +1160,62 @@
   </div>
 </section>
 
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div class="container">
+    <div class="fade-up">
+      <div class="section-label">FAQ</div>
+      <h2 class="section-title">Questions <span class="grad-text">fréquentes</span></h2>
+      <p class="section-sub">Tout ce que vous voulez savoir avant de vous lancer.</p>
+    </div>
+    <div class="faq-list fade-up">
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          Combien ça coûte ?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            <p>Le tarif s'adapte au nombre de logements pris en charge par l'assistant. Contactez-nous pour un devis personnalisé.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          Puis-je modifier les informations de mes logements à tout moment ?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            <p>Oui, vous avez un accès direct à votre base de données. Vous modifiez une information — code wifi, règlement, équipements — et l'agent l'applique immédiatement.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          Par quel canal l'agent communique-t-il avec mes voyageurs ?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            <p>L'agent peut communiquer via WhatsApp, SMS, Airbnb et Booking.com — là où vos voyageurs vous écrivent déjà.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- CTA FINAL -->
 <section class="cta-section" id="essai">
   <div class="cta-box fade-up">
     <h2>Prêt à ne plus répondre à vos voyageurs le soir ?</h2>
     <p>14 jours d'essai gratuit. On configure tout avec vous. Sans engagement.</p>
-    <a href="#" class="btn-white">Démarrer l'essai gratuit →</a>
+    <a href="mailto:christopher@xflowia.com?subject=Essai%20gratuit%20XFlowIA&body=Bonjour%2C%0A%0AJe%20souhaite%20d%C3%A9marrer%20mon%20essai%20gratuit%20de%2014%20jours.%0A%0AMerci%20!" class="btn-white">Démarrer l'essai gratuit →</a>
   </div>
 </section>
 
@@ -1096,6 +1227,7 @@
       <a href="#">Mentions légales</a>
       <a href="#">Conditions générales de vente</a>
       <a href="#">Politique de confidentialité</a>
+      <a href="mailto:christopher@xflowia.com">christopher@xflowia.com</a>
     </div>
   </div>
   <p class="footer-copy">© 2026 XFlowIA — Tous droits réservés. Conçu pour les conciergeries qui veulent dormir la nuit.</p>
@@ -1215,6 +1347,24 @@ async function runChat() {
 // Start chat after a brief delay
 setTimeout(runChat, 800);
 
+// ─── FAQ ACCORDION ───
+document.querySelectorAll('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.faq-item').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+    });
+    // Open clicked if it was closed
+    if (!isOpen) {
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  });
+});
+
 // ─── CTA PULSE ───
 const heroCta = document.getElementById('hero-cta');
 if (heroCta) {
@@ -1229,4 +1379,3 @@ if (heroCta) {
 </script>
 </body>
 </html>
-
