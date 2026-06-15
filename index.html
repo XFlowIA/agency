@@ -1,1 +1,1257 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XFlowIA </title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  :root {
+    --bg: #0B0B0B;
+    --card: #151515;
+    --card2: #1A1A1A;
+    --text: #FFFFFF;
+    --muted: #A3A3A3;
+    --accent: #00C26E;
+    --accent-dim: rgba(0,194,110,0.08);
+    --accent-border: rgba(0,194,110,0.25);
+    --border: rgba(255,255,255,0.07);
+    --border-hover: rgba(255,255,255,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    height: 64px;
+    background: rgba(11,11,11,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-size: 18px; font-weight: 800; letter-spacing: -0.03em;
+    color: var(--text);
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent);
+    color: #000;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 9px 20px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.88; }
+
+  /* SECTIONS */
+  section { width: 100%; padding: 100px 5%; }
+  .container { max-width: 900px; margin: 0 auto; }
+  .container-wide { max-width: 1100px; margin: 0 auto; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding-top: 120px; padding-bottom: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 60px;
+    align-items: center;
+    width: 100%;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-border);
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50% { opacity:0.4; transform:scale(0.7); }
+  }
+  .hero-title {
+    font-size: clamp(36px, 5vw, 62px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    margin-bottom: 24px;
+  }
+  .hero-title .accent { color: var(--accent); }
+  .hero-subtitle {
+    font-size: 17px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 560px;
+    margin-bottom: 40px;
+  }
+  .hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 14px 28px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+  .btn-ghost {
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .btn-ghost:hover { color: var(--text); }
+  .hero-trust {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 32px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .trust-dot { color: var(--accent); }
+
+  /* LIVE COUNTER WIDGET */
+  .live-counter {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    min-width: 240px;
+    position: relative;
+    overflow: hidden;
+  }
+  .live-counter::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    animation: scan 3s ease-in-out infinite;
+  }
+  @keyframes scan {
+    0%,100% { transform: translateX(-100%); }
+    50% { transform: translateX(100%); }
+  }
+  .counter-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted);
+    display: flex; align-items: center; gap: 6px;
+    margin-bottom: 12px;
+  }
+  .live-dot {
+    width: 7px; height: 7px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 1.4s infinite;
+  }
+  .counter-main {
+    font-size: 48px; font-weight: 900; letter-spacing: -0.04em;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .counter-sub {
+    font-size: 13px; color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .counter-divider {
+    height: 1px; background: var(--border);
+    margin-bottom: 16px;
+  }
+  .counter-row {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+  .counter-row-label { color: var(--muted); }
+  .counter-row-val { font-weight: 600; }
+  .counter-row-val.green { color: var(--accent); }
+  .counter-row-val.red { color: #FF5F5F; }
+
+  /* STAT SECTION */
+  #stats {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 80px 5%;
+  }
+  .stat-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .stat-headline {
+    font-size: clamp(22px, 3vw, 34px);
+    font-weight: 800;
+    text-align: center;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    margin-bottom: 60px;
+    max-width: 620px;
+    margin-left: auto; margin-right: auto;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    gap: 0;
+    max-width: 700px;
+    margin: 0 auto 60px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .stat-item {
+    padding: 48px 40px;
+    text-align: center;
+  }
+  .stat-divider-v {
+    background: var(--border);
+  }
+  .stat-number {
+    font-size: 80px; font-weight: 900; line-height: 1;
+    letter-spacing: -0.05em;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .stat-desc {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .stat-desc strong { color: var(--text); }
+  .stat-source {
+    text-align: center;
+    font-size: 12px;
+    color: #555;
+    margin-top: -20px;
+  }
+  .stat-source a { color: #666; }
+
+  .problem-block {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 700px;
+    margin: 60px auto 0;
+  }
+  .problem-title {
+    font-size: 13px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #FF5F5F;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .problem-title::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: #FF5F5F;
+    border-radius: 50%;
+  }
+  .problem-text {
+    font-size: 18px; font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+  }
+  .problem-text .hl { color: #FF5F5F; }
+
+  /* WHY SECTION */
+  #why {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+  .section-eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-eyebrow::before {
+    content: '';
+    width: 24px; height: 1px; background: var(--accent);
+  }
+  .section-title {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 800; letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .section-sub {
+    font-size: 16px; color: var(--muted);
+    line-height: 1.7; max-width: 540px;
+    margin-bottom: 48px;
+  }
+
+  .timeline {
+    display: flex; flex-direction: column; gap: 0;
+    max-width: 600px;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 18px; top: 40px; bottom: 40px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent-border), var(--border), transparent);
+  }
+  .timeline-item {
+    display: flex; gap: 20px; align-items: flex-start;
+    padding: 24px 0;
+    position: relative;
+  }
+  .timeline-dot {
+    width: 38px; height: 38px; flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+    color: var(--muted);
+    position: relative; z-index: 1;
+  }
+  .timeline-content {}
+  .timeline-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .timeline-desc { font-size: 14px; color: var(--muted); }
+
+  /* SOLUTION */
+  #solution {
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .solution-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .feature-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .feature-item {
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .feature-check {
+    width: 22px; height: 22px; flex-shrink: 0;
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 2px;
+  }
+  .feature-check svg { width: 12px; height: 12px; }
+  .feature-text { font-size: 15px; line-height: 1.5; }
+  .feature-text strong { color: var(--text); font-weight: 600; display: block; }
+  .feature-text span { color: var(--muted); font-size: 13px; }
+
+  /* DEMO PHONE */
+  .demo-phone {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 20px;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+  .phone-header {
+    display: flex; align-items: center; gap: 10px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+  .phone-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; color: var(--accent);
+  }
+  .phone-name { font-size: 14px; font-weight: 600; }
+  .phone-status { font-size: 11px; color: var(--accent); }
+  .chat-bubble {
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 8px;
+    max-width: 220px;
+  }
+  .bubble-them {
+    background: #222;
+    color: var(--text);
+    border-bottom-left-radius: 4px;
+  }
+  .bubble-ai {
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-border);
+    color: var(--text);
+    border-bottom-right-radius: 4px;
+    margin-left: auto;
+  }
+  .bubble-time { font-size: 10px; color: #555; text-align: right; margin-bottom: 12px; }
+  .typing-indicator {
+    display: flex; gap: 4px; align-items: center;
+    padding: 10px 14px;
+    background: #222;
+    border-radius: 14px;
+    width: fit-content;
+  }
+  .typing-dot {
+    width: 6px; height: 6px;
+    background: var(--muted);
+    border-radius: 50%;
+    animation: typingBounce 1.2s ease-in-out infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typingBounce {
+    0%,60%,100% { transform: translateY(0); opacity: 0.4; }
+    30% { transform: translateY(-6px); opacity: 1; }
+  }
+
+  /* DELIVERABLES */
+  #deliverables { padding-top: 100px; padding-bottom: 100px; }
+  .deliverables-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 48px;
+  }
+  .deliverable-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 24px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .deliverable-card:hover {
+    border-color: var(--accent-border);
+    transform: translateY(-3px);
+  }
+  .deliverable-icon {
+    width: 40px; height: 40px;
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-border);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+  }
+  .deliverable-icon svg { width: 20px; height: 20px; stroke: var(--accent); }
+  .deliverable-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .deliverable-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* HOW IT WORKS */
+  #how {
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .steps-row {
+    display: flex;
+    gap: 0;
+    margin-top: 56px;
+    position: relative;
+  }
+  .steps-row::before {
+    content: '';
+    position: absolute;
+    top: 28px; left: 60px; right: 60px;
+    height: 1px;
+    background: repeating-linear-gradient(90deg, var(--accent-border) 0, var(--accent-border) 6px, transparent 6px, transparent 12px);
+  }
+  .step-item {
+    flex: 1;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center;
+    padding: 0 16px;
+    position: relative; z-index: 1;
+  }
+  .step-num {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1px solid var(--accent-border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 20px;
+    flex-shrink: 0;
+  }
+  .step-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .step-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .step-badge {
+    display: inline-block;
+    margin-top: 48px;
+    padding: 16px 24px;
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-border);
+    border-radius: 10px;
+    font-size: 15px; font-weight: 600;
+    color: var(--accent);
+    text-align: center;
+  }
+
+  /* IMAGINE */
+  #imagine { padding: 100px 5%; }
+  .imagine-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .imagine-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 32px;
+  }
+  .imagine-card-title {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .imagine-card-title.you { color: var(--muted); }
+  .imagine-card-title.ai { color: var(--accent); }
+  .tag-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .tag-dot.you { background: var(--muted); }
+  .tag-dot.ai { background: var(--accent); animation: pulse 1.4s infinite; }
+  .task-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .task-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 14px;
+  }
+  .task-icon {
+    width: 28px; height: 28px; flex-shrink: 0;
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  .task-icon.you { background: rgba(163,163,163,0.08); }
+  .task-icon.ai { background: var(--accent-dim); }
+
+  /* FAQ */
+  #faq { padding: 100px 5%; background: var(--card); border-top: 1px solid var(--border); }
+  .faq-list { max-width: 680px; margin: 0 auto; margin-top: 48px; }
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+    padding: 24px 0;
+  }
+  .faq-question {
+    font-size: 16px; font-weight: 600;
+    display: flex; align-items: center; justify-content: space-between;
+    cursor: pointer;
+    gap: 16px;
+  }
+  .faq-question:hover { color: var(--accent); }
+  .faq-toggle {
+    width: 24px; height: 24px; flex-shrink: 0;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: var(--muted);
+    transition: transform 0.3s, border-color 0.2s;
+  }
+  .faq-item.open .faq-toggle {
+    transform: rotate(45deg);
+    border-color: var(--accent-border);
+    color: var(--accent);
+  }
+  .faq-answer {
+    font-size: 14px; color: var(--muted);
+    line-height: 1.7;
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s ease, padding-top 0.3s;
+  }
+  .faq-item.open .faq-answer {
+    max-height: 200px;
+    padding-top: 16px;
+  }
+
+  /* CTA SECTION */
+  #cta {
+    padding: 120px 5%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #cta::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,194,110,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-scarcity {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,95,95,0.08);
+    border: 1px solid rgba(255,95,95,0.2);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 12px; font-weight: 600;
+    color: #FF5F5F;
+    letter-spacing: 0.06em;
+    margin-bottom: 32px;
+  }
+  .cta-title {
+    font-size: clamp(32px, 5vw, 58px);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    margin-bottom: 24px;
+  }
+  .cta-sub {
+    font-size: 16px; color: var(--muted);
+    max-width: 500px; margin: 0 auto 40px;
+    line-height: 1.7;
+  }
+  .cta-benefits {
+    display: flex; justify-content: center; gap: 32px;
+    flex-wrap: wrap;
+    font-size: 13px; color: var(--muted);
+    margin-top: 24px;
+  }
+  .cta-benefit {
+    display: flex; align-items: center; gap: 6px;
+  }
+  .cta-benefit::before {
+    content: '✓';
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .urgency-bar {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 32px;
+    max-width: 640px;
+    margin: 60px auto 0;
+    display: flex; align-items: center; gap: 20px;
+  }
+  .urgency-icon { font-size: 32px; flex-shrink: 0; }
+  .urgency-text { font-size: 14px; color: var(--muted); line-height: 1.5; }
+  .urgency-text strong { color: var(--text); }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 5%;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 13px; color: #444;
+  }
+  .footer-logo { font-weight: 800; font-size: 15px; color: #333; }
+  .footer-logo span { color: var(--accent); }
+
+  /* REVEAL */
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* STAT COUNTER ANIM */
+  .stat-number { transition: none; }
+
+  @media (max-width: 768px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .live-counter { display: none; }
+    .stats-grid { grid-template-columns: 1fr; border: none; background: none; gap: 16px; }
+    .stat-divider-v { display: none; }
+    .stat-item { background: var(--card); border: 1px solid var(--border); border-radius: 14px; }
+    .solution-grid { grid-template-columns: 1fr; gap: 48px; }
+    .demo-phone { display: none; }
+    .deliverables-grid { grid-template-columns: 1fr 1fr; }
+    .steps-row { flex-direction: column; gap: 24px; }
+    .steps-row::before { display: none; }
+    .imagine-grid { grid-template-columns: 1fr; }
+    .urgency-bar { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">XFlow<span>IA</span></div>
+  <a href="https://cal.com/chris-bwdzsw/micro-brief-crm-leads-10-min" target="_blank" class="nav-cta">Réserver mon audit →</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container-wide">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow">Système IA de suivi commercial</div>
+        <h1 class="hero-title">
+          Transformez vos leads en <span class="accent">mandats</span>, même quand vous êtes en visite.
+        </h1>
+        <p class="hero-subtitle">
+          Nous installons pour vous un système IA complet qui contacte, qualifie et relance vos prospects 24h/24 — et remplit votre agenda en rendez-vous qualifiés.
+        </p>
+        <div class="hero-actions">
+          <a href="https://cal.com/chris-bwdzsw/micro-brief-crm-leads-10-min" target="_blank" class="btn-primary">Réserver mon audit gratuit</a>
+          <a href="#solution" class="btn-ghost">Voir comment ça marche →</a>
+        </div>
+        <div class="hero-trust">
+          <span class="trust-dot">✓</span> Sans engagement
+          <span style="color:#333; margin: 0 4px;">·</span>
+          <span class="trust-dot">✓</span> Installation en 2 semaines
+          <span style="color:#333; margin: 0 4px;">·</span>
+          <span class="trust-dot">✓</span> Résultats mesurables
+        </div>
+      </div>
+
+      <!-- LIVE COUNTER -->
+      <div class="live-counter">
+        <div class="counter-label">
+          <div class="live-dot"></div>
+          En ce moment
+        </div>
+        <div class="counter-main" id="lostLeads">0</div>
+        <div class="counter-sub">leads perdus aujourd'hui en France</div>
+        <div class="counter-divider"></div>
+        <div class="counter-row">
+          <span class="counter-row-label">Rappelés dans les 5 min</span>
+          <span class="counter-row-val green" id="fastReach">3%</span>
+        </div>
+        <div class="counter-row">
+          <span class="counter-row-label">Rappelés après 1h+</span>
+          <span class="counter-row-val red">67%</span>
+        </div>
+        <div class="counter-row">
+          <span class="counter-row-label">Jamais rappelés</span>
+          <span class="counter-row-val red">23%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="container">
+    <div class="stat-label">La statistique qui change tout</div>
+    <h2 class="stat-headline">Le problème n'est probablement pas le nombre de leads que vous recevez.</h2>
+
+    <div class="stats-grid reveal">
+      <div class="stat-item">
+        <div class="stat-number" data-target="100">0</div>
+        <div class="stat-desc"><strong>fois plus de chances</strong> de joindre un prospect contacté dans les 5 min plutôt que 30 min plus tard.</div>
+      </div>
+      <div class="stat-divider-v"></div>
+      <div class="stat-item">
+        <div class="stat-number" data-target="21">0</div>
+        <div class="stat-desc"><strong>fois plus de chances</strong> de qualifier un prospect contacté dans les 5 premières minutes.</div>
+      </div>
+    </div>
+
+    <p class="stat-source">Source : Dr James Oldroyd, étude menée sur 15 000+ leads</p>
+
+    <div class="problem-block reveal reveal-delay-1">
+      <div class="problem-title">Pourtant, dans l'immobilier</div>
+      <p class="problem-text">La plupart des leads sont rappelés <span class="hl">plusieurs heures après leur demande</span>. Parfois le lendemain. À ce moment-là, le prospect a déjà parlé à <span class="hl">plusieurs concurrents</span>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why">
+  <div class="container">
+    <div class="section-eyebrow">Pourquoi vous perdez des mandats</div>
+    <h2 class="section-title">Chaque jour, des opportunités disparaissent <em>sans que vous le sachiez.</em></h2>
+    <p class="section-sub">Le problème n'est pas votre compétence commerciale. Aucun humain ne peut assurer un suivi parfait de centaines de prospects 24h/24.</p>
+
+    <div class="timeline reveal">
+      <div class="timeline-item">
+        <div class="timeline-dot">1</div>
+        <div class="timeline-content">
+          <div class="timeline-title">Vous êtes en visite, en RDV ou en signature</div>
+          <div class="timeline-desc">Votre journée est dense. C'est votre métier.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">2</div>
+        <div class="timeline-content">
+          <div class="timeline-title">Pendant ce temps, les formulaires arrivent</div>
+          <div class="timeline-desc">Les appels sont manqués. Les relances oubliées. Les anciens contacts restent inexploités.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot" style="border-color: rgba(255,95,95,0.3); color: #FF5F5F;">!</div>
+        <div class="timeline-content">
+          <div class="timeline-title" style="color: #FF5F5F;">Le prospect choisit un concurrent</div>
+          <div class="timeline-desc">Celui qui a répondu en premier. Pas forcément le meilleur.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section id="solution">
+  <div class="container">
+    <div class="solution-grid">
+      <div>
+        <div class="section-eyebrow">La solution</div>
+        <h2 class="section-title">Votre système IA de suivi commercial</h2>
+        <p class="section-sub">XFlowIA contacte automatiquement chaque prospect dès qu'il entre dans votre système. Vous intervenez uniquement quand un prospect est prêt à vous parler.</p>
+
+        <ul class="feature-list reveal">
+          <li class="feature-item">
+            <div class="feature-check">
+              <svg viewBox="0 0 12 12" fill="none" stroke="#00C26E" stroke-width="2" stroke-linecap="round"><polyline points="2,6 5,9 10,3"/></svg>
+            </div>
+            <div class="feature-text">
+              <strong>Réponse instantanée</strong>
+              <span>Chaque lead est contacté dans les secondes qui suivent sa demande.</span>
+            </div>
+          </li>
+          <li class="feature-item">
+            <div class="feature-check">
+              <svg viewBox="0 0 12 12" fill="none" stroke="#00C26E" stroke-width="2" stroke-linecap="round"><polyline points="2,6 5,9 10,3"/></svg>
+            </div>
+            <div class="feature-text">
+              <strong>Qualification automatique</strong>
+              <span>L'IA pose les bonnes questions et identifie les prospects sérieux.</span>
+            </div>
+          </li>
+          <li class="feature-item">
+            <div class="feature-check">
+              <svg viewBox="0 0 12 12" fill="none" stroke="#00C26E" stroke-width="2" stroke-linecap="round"><polyline points="2,6 5,9 10,3"/></svg>
+            </div>
+            <div class="feature-text">
+              <strong>Relances intelligentes</strong>
+              <span>Suivi automatisé multi-canal jusqu'à la prise de rendez-vous.</span>
+            </div>
+          </li>
+          <li class="feature-item">
+            <div class="feature-check">
+              <svg viewBox="0 0 12 12" fill="none" stroke="#00C26E" stroke-width="2" stroke-linecap="round"><polyline points="2,6 5,9 10,3"/></svg>
+            </div>
+            <div class="feature-text">
+              <strong>Agenda rempli automatiquement</strong>
+              <span>Les RDV qualifiés se posent directement dans votre calendrier.</span>
+            </div>
+          </li>
+          <li class="feature-item">
+            <div class="feature-check">
+              <svg viewBox="0 0 12 12" fill="none" stroke="#00C26E" stroke-width="2" stroke-linecap="round"><polyline points="2,6 5,9 10,3"/></svg>
+            </div>
+            <div class="feature-text">
+              <strong>Réactivation des anciens leads</strong>
+              <span>Votre base de données dormante redevient une source de mandats.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- PHONE DEMO -->
+      <div class="reveal reveal-delay-2">
+        <div class="demo-phone">
+          <div class="phone-header">
+            <div class="phone-avatar">AI</div>
+            <div>
+              <div class="phone-name">XFlowIA Assistant</div>
+              <div class="phone-status">● En ligne · répond en &lt;30s</div>
+            </div>
+          </div>
+
+          <div class="chat-bubble bubble-them">Bonjour, je cherche à estimer mon appartement pour une vente.</div>
+          <div class="bubble-time">Il y a 12 sec</div>
+
+          <div class="chat-bubble bubble-ai">Bonjour ! Je suis ravi de vous aider. Pour vous préparer l'estimation la plus précise, pouvez-vous me donner le quartier et la superficie ?</div>
+          <div class="bubble-time" style="text-align:left; color: #555;">Envoyé instantanément</div>
+
+          <div class="chat-bubble bubble-them">75m², Paris 11ème</div>
+          <div class="bubble-time">Il y a 2 sec</div>
+
+          <div class="typing-indicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+          </div>
+          <div class="bubble-time" style="margin-top:6px;">XFlowIA est en train d'écrire...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERABLES -->
+<section id="deliverables">
+  <div class="container-wide">
+    <div class="section-eyebrow">Ce que vous obtenez</div>
+    <h2 class="section-title">Un système complet, installé et géré pour vous</h2>
+
+    <div class="deliverables-grid">
+      <div class="deliverable-card reveal">
+        <div class="deliverable-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+        </div>
+        <div class="deliverable-title">Audit stratégique</div>
+        <div class="deliverable-desc">Analyse complète de votre processus commercial actuel et identification des opportunités perdues.</div>
+      </div>
+
+      <div class="deliverable-card reveal reveal-delay-1">
+        <div class="deliverable-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <div class="deliverable-title">Installation technique</div>
+        <div class="deliverable-desc">Configuration CRM, WhatsApp, SMS, Email et calendrier. Tout est prêt en moins de 2 semaines.</div>
+      </div>
+
+      <div class="deliverable-card reveal reveal-delay-2">
+        <div class="deliverable-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="deliverable-title">Qualification automatique</div>
+        <div class="deliverable-desc">L'IA identifie les prospects sérieux pour que vous vous concentrez uniquement sur les bons RDV.</div>
+      </div>
+
+      <div class="deliverable-card reveal">
+        <div class="deliverable-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        </div>
+        <div class="deliverable-title">Réactivation des anciens leads</div>
+        <div class="deliverable-desc">Exploitation de votre base de données existante pour générer de nouveaux mandats.</div>
+      </div>
+
+      <div class="deliverable-card reveal reveal-delay-1">
+        <div class="deliverable-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+        <div class="deliverable-title">Dashboard de performance</div>
+        <div class="deliverable-desc">Suivi en temps réel de toutes les conversations, relances et rendez-vous générés.</div>
+      </div>
+
+      <div class="deliverable-card reveal reveal-delay-2">
+        <div class="deliverable-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <div class="deliverable-title">Optimisation continue</div>
+        <div class="deliverable-desc">Amélioration hebdomadaire des taux de conversion selon les performances observées.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="container-wide">
+    <div class="section-eyebrow">Comment ça fonctionne</div>
+    <h2 class="section-title">Opérationnel en moins de 2 semaines</h2>
+
+    <div class="steps-row reveal">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-title">Audit de votre système actuel</div>
+        <div class="step-desc">On analyse vos sources de leads et votre processus de suivi.</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-title">Installation de l'infrastructure IA</div>
+        <div class="step-desc">Configuration de tous les canaux et workflows automatisés.</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-title">Connexion à vos sources</div>
+        <div class="step-desc">Intégration avec votre CRM, Leboncoin, SeLoger, etc.</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-title">Lancement des automatisations</div>
+        <div class="step-desc">Votre système entre en action et commence à travailler.</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">5</div>
+        <div class="step-title">Optimisation hebdomadaire</div>
+        <div class="step-desc">Amélioration continue basée sur les données réelles.</div>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 48px;">
+      <div class="step-badge reveal">⚡ En moins de 2 semaines, votre système travaille déjà pour vous</div>
+    </div>
+  </div>
+</section>
+
+<!-- IMAGINE -->
+<section id="imagine">
+  <div class="container">
+    <div class="section-eyebrow">Imaginez les 30 prochains jours</div>
+    <h2 class="section-title">Vous faites votre métier. L'IA fait le reste.</h2>
+
+    <div class="imagine-grid reveal">
+      <div class="imagine-card">
+        <div class="imagine-card-title you">
+          <div class="tag-dot you"></div>
+          Vous vous concentrez sur
+        </div>
+        <ul class="task-list">
+          <li class="task-item">
+            <div class="task-icon you">🏠</div>
+            Les visites et estimations
+          </li>
+          <li class="task-item">
+            <div class="task-icon you">🤝</div>
+            Les négociations
+          </li>
+          <li class="task-item">
+            <div class="task-icon you">✍️</div>
+            Les signatures de mandats
+          </li>
+          <li class="task-item">
+            <div class="task-icon you">📋</div>
+            Les rendez-vous qualifiés
+          </li>
+        </ul>
+      </div>
+
+      <div class="imagine-card" style="border-color: var(--accent-border);">
+        <div class="imagine-card-title ai">
+          <div class="tag-dot ai"></div>
+          Votre IA gère en parallèle
+        </div>
+        <ul class="task-list">
+          <li class="task-item">
+            <div class="task-icon ai">⚡</div>
+            Les réponses instantanées
+          </li>
+          <li class="task-item">
+            <div class="task-icon ai">🔄</div>
+            Les relances automatiques
+          </li>
+          <li class="task-item">
+            <div class="task-icon ai">🎯</div>
+            La qualification des prospects
+          </li>
+          <li class="task-item">
+            <div class="task-icon ai">📅</div>
+            Le remplissage de votre agenda
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div style="text-align:center; margin-bottom: 0;">
+      <div class="section-eyebrow" style="justify-content: center;">Questions fréquentes</div>
+      <h2 class="section-title">Tout ce que vous devez savoir</h2>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Est-ce que je dois apprendre à utiliser l'IA ?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">Non. Nous installons, configurons et gérons le système dans son intégralité. Vous n'avez rien à apprendre ni à administrer. Votre seule responsabilité est d'honorer les rendez-vous qualifiés qui apparaissent dans votre agenda.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Est-ce que cela fonctionne avec mon CRM ?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">Oui, dans la grande majorité des cas. Nous connectons le système aux principaux CRM immobiliers utilisés en France. Si vous avez un CRM spécifique, nous vérifions la compatibilité lors de l'audit gratuit.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Et si je n'ai pas beaucoup de leads entrants ?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">C'est souvent là que le plus grand potentiel se cache. Nous pouvons réactiver votre base de données d'anciens contacts et de prospects qui n'ont jamais abouti. Beaucoup d'agences génèrent leurs premiers RDV supplémentaires dès les premières semaines grâce à cette réactivation.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Est-ce que les prospects savent qu'ils parlent à une IA ?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">Les échanges sont conçus pour rester naturels et professionnels, dans le ton de votre agence. La priorité est d'offrir une expérience fluide au prospect pour maximiser les prises de rendez-vous.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Combien de temps avant de voir des résultats ?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">Le système est opérationnel en moins de 2 semaines. Les premiers rendez-vous qualifiés générés automatiquement apparaissent généralement dès les premiers jours de fonctionnement, selon le volume de leads entrants.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="container" style="position: relative; z-index: 1;">
+    <div class="cta-scarcity">
+      ⚠️ Places limitées — Installations ouvertes ce mois-ci
+    </div>
+    <h2 class="cta-title">
+      Chaque jour de retard<br>coûte des opportunités.
+    </h2>
+    <p class="cta-sub">
+      Pendant que vous lisez cette page, de nouveaux leads arrivent. La question n'est pas de savoir si vous perdez des opportunités. La question est de savoir combien.
+    </p>
+
+    <a href="https://cal.com/chris-bwdzsw/micro-brief-crm-leads-10-min" target="_blank" class="btn-primary" style="font-size:17px; padding: 18px 36px; border-radius: 10px;">
+      Réserver mon audit stratégique gratuit →
+    </a>
+
+    <div class="cta-benefits">
+      <div class="cta-benefit">Aucune obligation</div>
+      <div class="cta-benefit">Aucune pression commerciale</div>
+      <div class="cta-benefit">Analyse personnalisée</div>
+      <div class="cta-benefit">30 minutes chrono</div>
+    </div>
+
+    <div class="urgency-bar">
+      <div class="urgency-icon">🗓️</div>
+      <div class="urgency-text">
+        <strong>Pendant cet appel, nous allons :</strong> analyser votre processus de suivi, identifier les opportunités perdues, estimer le potentiel de votre base de données et construire votre plan d'automatisation personnalisé.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">XFlow<span>IA</span></div>
+  <div>© 2025 XFlowIA · Système IA de suivi commercial immobilier</div>
+</footer>
+
+<script>
+// LIVE COUNTER
+(function() {
+  const now = new Date();
+  const secondsToday = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+  const leadsPerSecond = 0.043;
+  let count = Math.floor(secondsToday * leadsPerSecond);
+
+  const el = document.getElementById('lostLeads');
+  if (el) el.textContent = count.toLocaleString('fr-FR');
+
+  setInterval(() => {
+    if (Math.random() < 0.5) {
+      count++;
+      if (el) el.textContent = count.toLocaleString('fr-FR');
+    }
+  }, 1800);
+})();
+
+// STAT NUMBER ANIMATION
+function animateCounter(el, target) {
+  const duration = 1200;
+  const start = performance.now();
+  const suffix = el.dataset.suffix || 'x';
+
+  function update(time) {
+    const elapsed = time - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    const current = Math.floor(ease * target);
+    el.textContent = current + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+
+// REVEAL ON SCROLL
+const revealEls = document.querySelectorAll('.reveal');
+const statEls = document.querySelectorAll('.stat-number[data-target]');
+let statsAnimated = false;
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(el => {
+    if (el.isIntersecting) {
+      el.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15 });
+
+revealEls.forEach(el => observer.observe(el));
+
+const statObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !statsAnimated) {
+      statsAnimated = true;
+      statEls.forEach(el => {
+        animateCounter(el, parseInt(el.dataset.target));
+      });
+    }
+  });
+}, { threshold: 0.3 });
+
+if (statEls.length) statObserver.observe(statEls[0].closest('section') || statEls[0]);
+
+// FAQ TOGGLE
+function toggleFaq(trigger) {
+  const item = trigger.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// NAV SCROLL EFFECT
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  if (window.scrollY > 40) {
+    nav.style.borderBottomColor = 'rgba(255,255,255,0.1)';
+  } else {
+    nav.style.borderBottomColor = 'rgba(255,255,255,0.07)';
+  }
+});
+</script>
+</body>
+</html>
